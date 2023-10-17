@@ -1,15 +1,4 @@
 import pandas as pd
-import os
-from pdf2image import convert_from_path
-import pyperclip as pc
-from os import listdir
-from os.path import isfile, join
-import pytesseract
-from PyPDF2 import PdfWriter, PdfReader
-from bs4 import BeautifulSoup
-from bs4.element import Comment
-import urllib.request
-from numpy import nan
 
 dataset = pd.read_csv('fake.csv') #reading csv
 keywords = ['cryptocurrency','financial','finance','finances', 'money', 'wealth', 'stocks']

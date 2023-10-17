@@ -1,6 +1,3 @@
-import pandas as pd
-import biasdetector
-from collections import Counter
 import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
@@ -12,6 +9,7 @@ class Keyword:
     def keyword_list(self):
         keyword_list = replaceSpecial(self.text_col)
         self.keyword_list = CountFrequencyinWords(keyword_list)[0]
+        self.keyword_list = str([word for word in self.keyword_list if not word in stopwords])
     def keyword_dict(self):
         keyword_dict = replaceSpecial(self.text_col)
         self.keyword_dict = CountFrequencyinWords(keyword_dict)[1]
@@ -34,11 +32,5 @@ def CountFrequencyinWords(my_list):
     for r in freq_sorted_keys:
         desc_dict.append(r)
     return desc_dict, freq_sorted_keys
-
-biasdetector = Keyword(biasdetector.dataset['Text'])
-biasdetector.keyword_list()
-
-biasdetector_keyword_list = str([word for word in biasdetector.keyword_list if not word in stopwords])
-print(biasdetector_keyword_list)
 
 #the work needed here is brainstorming how to get the bias words from the non-bias words such as names, numbers. Proper nouns are the most likely to be bias as well as descriptive words (adjectives, nouns, verbs).

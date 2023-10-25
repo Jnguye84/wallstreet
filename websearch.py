@@ -20,7 +20,7 @@ def text_from_html(body):
 
 # Set the User-Agent header to mimic a web browser
 req = Request(
-    url='https://cointelegraph.com/news/sam-bankman-fried-us-president-says-caroline-ellison', 
+    url='', #this is where the variable needs to go
     headers={'User-Agent': 'Mozilla/5.0'}
 )
 webpage = urlopen(req).read()

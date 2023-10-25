@@ -12,6 +12,9 @@ from bs4.element import Comment
 import mostfrequent
 from urllib.request import Request, urlopen
 
+from document_classify import DocClassifyExcel
+from PKM_keyword_fin import SocialNetworkGraph
+import pandas as pd
 
 # Create the application.
 APP = Flask(__name__)
@@ -49,12 +52,14 @@ def url():
             headers={'User-Agent': 'Mozilla/5.0'}
         )
         webpage = urlopen(req).read()
-        article_str = text_from_html(webpage)
+        article_str = text_from_html(webpage) #string from the entire webpage
         article = mostfrequent.Keyword(article_str)
         article.keyword_list()
-        article_ = article.keyword_list
-        text = 'submitted!'
-        return render_template('display_word.html', article_=article_, text=text)
+        article_ = article.keyword_list #taking the most common keywords
+
+        #naive bayes classifier
+
+        return render_template('display_word.html', article_=article_)
     return render_template('url.html', form = form)
 
 if __name__ == '__main__':

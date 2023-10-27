@@ -1,7 +1,7 @@
-from PKM_keyword_fin import *
 import pandas as pd
 import matplotlib.pyplot as plt
 from collections import Counter
+from mostfrequent import *
 
 class TableLen(): #getting the length of the data table to go through each row (extracted text within each file)
     def __init__(self, test_doc_classification_table):
@@ -29,9 +29,6 @@ class Histogram():
         self.result = dict(sorted(result.items(), key=lambda item: (item[1]), reverse = True,))
         self.result_short = dict(list(self.result.items())[0:30])
 
-        #plt.bar(self.result_short.keys(), self.result_short.values())
-        #plt.xticks(rotation = 90)
-
 class ProbFreq(): 
     def __init__(self, dict):
         self.dict = dict
@@ -43,111 +40,119 @@ class ProbFreq():
             probfreq = dict(sorted(probfreq.items(), key=lambda item: (item[1]), reverse = True,))
         self.probfreq = probfreq
 
-def ProbCat(df1, df2, df3): #neutral probability
+def SocialNetworkGraph(pathway): #most frequent keywords
+    df = pd.read_excel(pathway, dtype='string')
+    df = df.fillna('') #makes it an str so that we can split within the text col
+    keywords_col = []
+    text_index = df.columns.get_loc('Text')
+    for row in range(0,len(df)):
+        text_col = df.iloc[row,text_index]
+        obj = Keyword(text_col)
+        obj.keyword_list()
+         #gets keywords by frequency and getting rid of special characters
+        keywords_col.append(obj.keyword_list)
+    df['Keywords'] = keywords_col
+    df[['key1','key2','key3', 'key4', 'key5']] = df['Keywords'].str.split(' ',n=4, expand = True)
+    un_pivot = pd.melt(df, id_vars = 'Title', value_vars = ['key1','key2', 'key3', 'key4', 'key5'])
+    un_pivot = un_pivot.drop("variable", axis = 'columns')
+    return df, un_pivot #df will have 5 keyword columns for each row detailing the 5 most common keywords #print un_pivot
+
+def ProbCat(df1, df2): #neutral probability
     df1 = len(df1)
     df2 = len(df2)
-    df3 = len(df3)
-    tot = df1 + df2 + df3
+    tot = df1 + df2
     df1_prob = df1/ tot
     df2_prob = df2 / tot
-    df3_prob = df3 / tot
-    return df1_prob, df2_prob, df3_prob
+    return df1_prob, df2_prob
     
-def DocClassifyExcel(file, num): #file should just be 
+def DocClassifyExcel(text): #file should just be 
 
-    articles = SocialNetworkGraph(r'/Users/jessicanguyen/Documents/GitHub/PKM/PKM/Training_Data_Doc_Classification.xlsx',2)[1]
-    emails = SocialNetworkGraph(r"/Users/jessicanguyen/Documents/GitHub/PKM/PKM/Training_Data_Doc_Classification.xlsx",0)[1]
-    determinations = SocialNetworkGraph(r"/Users/jessicanguyen/Documents/GitHub/PKM/PKM/Training_Data_Doc_Classification.xlsx",1)[1]
+    fake = SocialNetworkGraph(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/fake_edited copy.xlsx')[1]
+    real = SocialNetworkGraph(r"/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/True copy.xlsx")[1]
 
-    lendf = TableLen(emails)
+    #making histograms 
+    lendf = TableLen(real)
     lendf = len(lendf)
 
-    emails_hist = Histogram(emails, lendf)
-    emails_hist.makeHistogram()
-    emails_hist.dict_total
-    emails_hist.result()
-    emails_hist.result = emails_hist.result
+    real_hist = Histogram(real, lendf)
+    real_hist.makeHistogram()
+    real_hist.dict_total
+    real_hist.result()
+    real_hist.result = real_hist.result
 
-    lendf = TableLen(determinations)
+    lendf = TableLen(fake)
     lendf = len(lendf)
 
-    determinations_hist = Histogram(determinations, lendf)
-    determinations_hist.makeHistogram()
-    determinations_hist.dict_total
-    determinations_hist.result()
-    determinations_hist.result = determinations_hist.result
+    fake_hist = Histogram(fake, lendf)
+    fake_hist.makeHistogram()
+    fake_hist.dict_total
+    fake_hist.result()
+    fake_hist.result = fake_hist.result
 
-    lendf = TableLen(articles)
-    lendf = len(lendf)
+    #making probability frequency
+    fake_freq = ProbFreq(fake_hist.result)
+    fake_freq.ProbFreq()
+    a_cat_total = fake_freq.catTotal
+    fake_freq = fake_freq.probfreq
 
-    articles_hist = Histogram(articles, lendf)
-    articles_hist.makeHistogram()
-    articles_hist.dict_total
-    articles_hist.result()
-    articles_hist.result = articles_hist.result
+    real_freq = ProbFreq(real_hist.result)
+    real_freq.ProbFreq()
+    e_cat_total = real_freq.catTotal
+    real_freq = real_freq.probfreq
 
+    test_text = text #this is the text
+    test_text = Keyword(test_text)
+    test_text.keyword_list()
+    test_text = test_text.keyword_list
+    prob = 1
+    for word in test_text[0:70]:
+        if word in list(real_freq.keys()):
+            prob = prob * real_freq[word]
+        else:
+            prob = prob * (1/e_cat_total)
 
-    articles_freq = ProbFreq(articles_hist.result)
-    articles_freq.ProbFreq()
-    a_cat_total = articles_freq.catTotal
-    articles_freq = articles_freq.probfreq
+    prob = ProbCat(real,fake)[0]
+    real_classification = prob
+    prob = 1
+    for word in test_text[0:70]:
+        if word in list(fake_freq.keys()):
+            prob = prob * fake_freq[word]
+        else:
+            prob = prob * (1/a_cat_total)
+    
+    prob = ProbCat(real,fake)[1]
+    fake_classification = prob
 
-    determinations_freq = ProbFreq(determinations_hist.result)
-    determinations_freq.ProbFreq()
-    d_cat_total = determinations_freq.catTotal
-    determinations_freq = determinations_freq.probfreq
+    arr = {real_classification: 'real classification', fake_classification: 'fake classification'}
 
-    emails_freq = ProbFreq(emails_hist.result)
-    emails_freq.ProbFreq()
-    e_cat_total = emails_freq.catTotal
-    emails_freq = emails_freq.probfreq
-
-
-    df = pd.read_excel(file, sheet_name = num)
-    df = df.fillna('')
-    doc_classify = []
-    for row in range(0, len(df)):
-        test_text = df.iloc[row,0]
-        test_text = Keyword(test_text)
-        test_text.keyword_list()
-        test_text = test_text.keyword_list
-
-        prob = ProbCat(emails, determinations, articles)[0]
-
-        for word in test_text[0:70]:
-            if word in list(emails_freq.keys()):
-                prob = prob * emails_freq[word]
-            else:
-                prob = prob * (1/e_cat_total)
-
-        email_classification = prob
-
-        prob = ProbCat(emails, determinations, articles)[1] #neutral probability 
-
-        for word in test_text[0:70]:
-            if word in list(determinations_freq.keys()):
-                prob = prob * determinations_freq[word]
-            else:
-                prob = prob * (1/d_cat_total)
-
-        determination_classification = prob
-
-        prob = ProbCat(emails, determinations, articles)[2]
-
-        for word in test_text[0:70]:
-            if word in list(articles_freq.keys()):
-                prob = prob * articles_freq[word]
-            else:
-                prob = prob * (1/a_cat_total)
-
-
-        article_classification = prob
-
-        arr = {determination_classification: 'determination classification', article_classification: 'article classification', email_classification: 'email classification'}
-        arr_max = max(list(arr.keys()))
-        arr_prob = arr[arr_max]
-
-        doc_classify.append(arr_prob)
-
-    return doc_classify
+    return arr
         
+import pandas as pd
+from bs4 import BeautifulSoup
+from bs4.element import Comment
+import urllib.request
+import mostfrequent
+from urllib.request import Request, urlopen
+
+def tag_visible(element):
+    if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
+        return False
+    if isinstance(element, Comment):
+        return False
+    return True
+
+def text_from_html(body):
+    soup = BeautifulSoup(body, 'html.parser')
+    texts = soup.findAll(text=True)
+    visible_texts = filter(tag_visible, texts)
+    return u" ".join(t.strip() for t in visible_texts)
+
+# Set the User-Agent header to mimic a web browser
+req = Request(
+    url='https://www.newyorker.com/magazine/2023/10/30/on-marriage-devorah-baum-book-review-the-two-parent-privilege-melissa-kearney', #this is where the variable needs to go
+    headers={'User-Agent': 'Mozilla/5.0'}
+)
+webpage = urlopen(req).read()
+article_str = text_from_html(webpage)
+print(DocClassifyExcel(article_str))
+print()

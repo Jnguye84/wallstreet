@@ -52,11 +52,8 @@ def url():
         )
         webpage = urlopen(req).read()
         article_str = text_from_html(webpage) #string from the entire webpage
-        article = mostfrequent.Keyword(article_str)
-        article.keyword_list()
-        article_ = article.keyword_list #taking the most common keywords
-        classify = DocClassifyExcel(article_)
-        return render_template('display_word.html', article_=classify)
+        classify = DocClassifyExcel(article_str) #input needs to be string or list
+        return render_template('display_word.html', classify=classify)
     return render_template('url.html', form = form)
 
 if __name__ == '__main__':

@@ -1,30 +1,26 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from collections import Counter
-from mostfrequent import long_dict_category
- 
-bias = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/fake_edited copy.xlsx')
-un_bias = long_dict_category(r"/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/True copy.xlsx")
+from mostfrequent import p_bias, n_bias, un_bias
 
-neutr = 1/2
-bias_denom = min(list(bias.values()))
-un_bias_denom = min(list(un_bias.values()))
+neutr = 1/3
 
 def DocClassifyExcel(text): #text should be string, un_bias is the category dict, bias is the category dict
-    bias_prob = float(neutr)
+    p_bias_prob = float(neutr)
+    un_bias_prob = float(neutr)
+    n_bias_prob = float(neutr)
     text = text.split()
 
-    un_bias_prob = float(neutr)
-    for word in list(un_bias.keys()): #bias classification
+    for word in list(n_bias.keys()): #negative bias classification
+        if word in text:
+            n_bias_prob = float(n_bias_prob) * n_bias[word]
+    
+    for word in list(un_bias.keys()): #unbias classification
         if word in text:
             un_bias_prob = float(un_bias_prob) * un_bias[word]
-        else:
-            un_bias_prob = float(un_bias_prob) * (un_bias_denom)
 
-    for word in list(bias.keys()): #bias classification
+    for word in list(p_bias.keys()): #positive bias classification
         if word in text:
-            bias_prob = float(bias_prob) * bias[word]
-        else:
-            bias_prob = float(bias_prob) * (bias_denom)
+            p_bias_prob = float(p_bias_prob) * p_bias[word]
             
-    return 'bias classification:', bias_prob,'un_bias classification', un_bias_prob
+    return 'positive bias classification:', p_bias_prob,'un bias classification', un_bias_prob, 'negative bias classification', n_bias_prob

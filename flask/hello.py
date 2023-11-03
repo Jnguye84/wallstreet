@@ -21,7 +21,7 @@ APP.config['SECRET_KEY'] = 'you-will-never-guess'
 
 class UploadStringForm(FlaskForm):
     user_string = StringField('String', validators=[InputRequired()])
-    submit = SubmitField('Upload File')
+    submit = SubmitField('Send Link')
 
 @APP.route('/')
 def home():

@@ -9,10 +9,8 @@
           const rotatingImage = document.querySelector(".rotating-image");
           rotatingImage.style.transform = `rotate(${scrollPosition*5}deg)`;
         });
-      </script>      
-
+    </script>      
     <style>
-
         /* styles.css */
         .scroll-rotate-container {
         height: 30vh; /* Set the container height to the viewport height for scrolling effect */
@@ -93,7 +91,6 @@
         font-family: 'FF DIN', sans-serif; /* Use your second font for the second part of the title */
         /* Add other styles for the second part here */
         }
-
     </style>
 </head>
 
@@ -112,21 +109,30 @@
                 Welcome to our Financial Bias Detector inspired by Wolf of Wall Street. Click here to access the <a href="url">bias detector</a>.
             </p>
             <p>
-                The financial news data sentiment analysis project will explore within each chosen news article biases (positive, negative, neutral) towards the specified financial topic: cryptocurrency Word cloud of the most common words used within cryptocurrency articles
+                The financial news data sentiment analysis project will explore within each chosen news article biases (positive, negative, neutral). It deals with 
             </p>
             <p>
-            To measure biases, techniques that will be used is: Text mining, document classification, and Natural Language Processing. Question to answer while figuring out the code: “how do I classify this article as positive, negative, or neutral based on keywords?” 
+                To measure biases, techniques that will be used is: text mining, document classification, and Natural Language Processing. Question to answer while figuring out the code: “how do I classify this article as positive, negative, or neutral based on keywords?” 
             </p>
             <div class="scroll-rotate-container">
                 <img src="https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1439,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1492203945/articles/2013/12/17/the-21-craziest-moments-in-the-wolf-of-wall-street-cocaine-fueled-orgies-and-more/131217-wolf-wallstreet_gywtdq" width="200" height="100" alt="Rotating Image" class="rotating-image">
             </div>
             <p>
-                Question to answer for overall results of biases: “which financial news outlet is more bias towards cryptocurrency, which ones are against cryptocurrency” Possible additional question: “what is the overall sentiment towards cryptocurrency over time?”
+                Question to answer: What is the overall sentiment towards finance news over time?”
             </p>
             <p>
-                To produce word cloud on financial news, techniques that will be used is: Text mining, finding most frequent words in article within dictionary. (NOTE: I already did this within the PKM_keyword.ipynb, it will just need to be modified) Question to answer while coding: how do I code a word cloud and how does the data have to be formatted to be able to do that? Question to answer for overall results: “which words are most commonly used within financial news outlets? Are these positive or negative words?”
+                 Question to answer for overall results: “which words are most commonly used within financial news outlets? Are these positive or negative words?”
             </p>
-    
+                <h1>How to Use</h1>
+                <p>
+                    1. Click on the <a href="url">bias detector</a>.
+                </p>
+                <p>
+                    2. Put in a financial news article
+                </p>
+                <p>
+                    3. View your results which include the bias classification, the accuracy, and the words within the article that determined that score
+                </p>
         </div>
         <div class="left-column">
             <h1>More About the Wolf of Wall Street</h1>
@@ -135,7 +141,6 @@
             </p>
             <p>
                 With a mix of hedonism, greed, and audacious financial schemes, Belfort and his team live a life of extreme opulence, attracting the attention of the FBI. The film explores the consequences of unchecked ambition and the allure of the American dream, all while delivering a wild, exhilarating, and often hilarious ride through the world of high finance.
-            </p>
             </p>
         </div>
     </div> 

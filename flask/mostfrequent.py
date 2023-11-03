@@ -35,7 +35,7 @@ class Keyword:
         for key in self.category_lst.keys():
             probfreq.update({key : (self.category_lst[key] + 1 )/self.catTotal}) #the +1 is there because of phantom values
         probfreq = dict(sorted(probfreq.items(), key=lambda item: (item[1]), reverse = True,))
-        probfreq = {k: probfreq[k] for k in list(probfreq)[:75]}
+        probfreq = {k: probfreq[k] for k in list(probfreq)[:90]}
         self.probfreq = probfreq
 
 def final_dict(article_str): 
@@ -73,3 +73,4 @@ n_bias = {key: value for key, value in neg.items() if key not in pos_stopwords}
 
 un_bias = {key: value for key, value in neutr.items() if key not in pos_stopwords}
 un_bias = {key: value for key, value in neutr.items() if key not in neg_stopwords}
+

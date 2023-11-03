@@ -22,5 +22,9 @@ def DocClassifyExcel(text): #text should be string, un_bias is the category dict
     for word in list(p_bias.keys()): #positive bias classification
         if word in text:
             p_bias_prob = float(p_bias_prob) * p_bias[word]
-            
-    return 'positive bias classification:', p_bias_prob,'un bias classification', un_bias_prob, 'negative bias classification', n_bias_prob
+    
+    arr = {p_bias_prob: 'positive bias classification:', un_bias_prob:'un bias classification', n_bias_prob:'negative bias classification'}
+    arr_max = max(list(arr.keys()))
+    arr_name = arr[arr_max]
+    
+    return arr_max, arr_name

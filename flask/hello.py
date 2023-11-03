@@ -52,8 +52,10 @@ def url():
         )
         webpage = urlopen(req).read()
         article_str = text_from_html(webpage) #string from the entire webpage
-        classify = DocClassifyExcel(article_str) #input needs to be string or list
-        return render_template('display_word.html', classify=classify)
+        arr_prob,classify = DocClassifyExcel(article_str) #input needs to be string or list
+        arr_prob = arr_prob*100
+        arr_prob = "{:.6f}".format(arr_prob)
+        return render_template('display_word.html', arr_prob=arr_prob, classify=classify)
     return render_template('url.html', form = form)
 
 if __name__ == '__main__':

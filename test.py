@@ -117,3 +117,4 @@ def DocClassifyExcel(text): #text should be string, real is the category dict, f
     return 'fake classification:', fake_prob,'real classification', real_prob
 
 print(DocClassifyExcel(article_str))
+print()

@@ -3,10 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Financial Bias Detector</title>
+    <style>
+
+        /* styles.css */
+        .scroll-rotate-container {
+        height: 30vh; /* Set the container height to the viewport height for scrolling effect */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .rotating-image {
+        /* Add any initial image styles if needed */
+}
+        body {
+        background-color: #e5e1e3; /* Set the background color of the entire page */
+        }
+
+        h1 {
+        color: #2f241e; /* Set the color of the heading text */
+        }
+
+        p {
+        color: #2f241e; /* Set the color of paragraph text */
+        }
+
+        @font-face {
+        font-family: 'FF DIN'; /* Choose a name for your font */
+        src: url('/Users/jessicanguyen/Downloads/New folder (11)/DIN.ttf') format('woff2'); /* Specify the font file and format */
+        }
+
+        @font-face {
+        font-family: 'FF DIN BOLD'; /* Choose a name for your font */
+        src: url('/Users/jessicanguyen/Downloads/New folder (11)/DIN Bold.ttf') format('woff2'); /* Specify the font file and format */
+        }
+        
+        .title-box {
+        text-align: center; /* Center align text inside the container */
+        border: 2px solid #f6a824; /* Define the border with the desired width and color */
+        background-color: #f6a824; /* Set a background color */
+        width: 100%;
+        }
+
+        body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        }
+
+        .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        }
+
+        .page-title {
+            font-size: 36px;
+        }
+
+        .left-column {
+        margin-right: 10px;
+        text-align: right;
+        }
+
+        .right-column {
+        margin-left: 10px;
+        text-align: left;
+        }
+
+        .paragraph-divider {
+            text-align: center; /* Center-align the text */
+            font-family: 'FF DIN'
+        }
+
+        .font1 {
+        font-family: 'FF DIN BOLD', sans-serif; /* Use your first font for the first part of the title */
+        /* Add other styles for the first part here */
+        }
+
+        .font2 {
+        font-family: 'FF DIN', sans-serif; /* Use your second font for the second part of the title */
+        /* Add other styles for the second part here */
+        }
+
+    </style>
 </head>
 <body>
-
-   <h1>Financial Bias Detector</h1>
+    <div class="title-box">
+        <h1>Financial Bias Detector</h1>
+    </div>
+   
    <h2>This value is {{classify}} bias with a likelihood of</h2>
    <div>
         <p>{{arr_prob}}%</p>

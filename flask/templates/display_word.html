@@ -14,7 +14,7 @@
         var possibleEmoji = ["💸"];
         var width = window.innerWidth;
         var height = window.innerHeight;
-        var cursor = { x: width / 2, y: width / 2 };
+        var cursor = { x: width, y: width};
         var particles = [];
 
         function init() {
@@ -48,7 +48,7 @@
             cursor.x = e.clientX;
             cursor.y = e.clientY;
 
-            addParticle(cursor.x, cursor.y, possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)]);
+            addParticle(cursor.x-800, cursor.y, possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)]);
         }
 
         function addParticle(x, y, character) {
@@ -228,9 +228,15 @@
             {{common_words}}
         </div>
     </div>
+    {% if classify == "positive bias classification" %}
+        <div class="scroll-rotate-container">
+            <img src="https://www.usnews.com/object/image/00000143-6f3d-df93-a95b-fffdd6390000/51343widemodern_wolfofwallst_122313.jpg?update-time=&size=responsive640" width="400" height="200" class="rotating-image">
+        </div>
+    {% else %}
     <div class="scroll-rotate-container">
-        <img src="https://www.usnews.com/object/image/00000143-6f3d-df93-a95b-fffdd6390000/51343widemodern_wolfofwallst_122313.jpg?update-time=&size=responsive640" width="400" height="200" class="rotating-image">
+        <img src="https://eu-images.contentstack.com/v3/assets/blt949ea8e16e463049/bltfdf1264734e7f316/63f3955a807f2f262653b2f5/PMA6DC.jpg" width="400" height="300" class="rotating-image">
     </div>
+    {% endif %}
         
 </body>
 </html>

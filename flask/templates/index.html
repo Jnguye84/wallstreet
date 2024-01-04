@@ -14,7 +14,7 @@
         var possibleEmoji = ["💸"];
         var width = window.innerWidth;
         var height = window.innerHeight;
-        var cursor = { x: width / 2, y: width / 2 };
+        var cursor = { x: width, y: height };
         var particles = [];
 
         function init() {
@@ -48,9 +48,8 @@
             cursor.x = e.clientX;
             cursor.y = e.clientY;
 
-            addParticle(cursor.x, cursor.y, possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)]);
-        }
-
+    addParticle(cursor.x- 800, cursor.y, possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)]);
+}
         function addParticle(x, y, character) {
             var particle = new Particle();
             particle.init(x, y, character);

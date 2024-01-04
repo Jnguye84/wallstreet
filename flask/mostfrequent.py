@@ -56,13 +56,13 @@ def long_dict_category(pathway, sheet_name): #most frequent keywords
     return long_dict
 
 
-neutr = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/financial_sa copy.xlsx', 'neutral')
+neutr = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/flask/financial_sa copy.xlsx', 'neutral')
 neutr_stopwords = list(neutr.keys()) #get rid of these words within the other bias categories
 
-neg = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/financial_sa copy.xlsx', 'negative')
+neg = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/flask/financial_sa copy.xlsx', 'negative')
 neg_stopwords = list(neg.keys()) #get rid of these words within the other bias categories
 
-pos = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/financial_sa copy.xlsx', 'positive')
+pos = long_dict_category(r'/Users/jessicanguyen/Documents/GitHub/wallstreet_moviesml/wallstreet/flask/financial_sa copy.xlsx', 'positive')
 pos_stopwords = list(pos.keys()) #get rid of these words within the other bias categories
 
 p_bias = {key: value for key, value in pos.items() if key not in neutr_stopwords}
